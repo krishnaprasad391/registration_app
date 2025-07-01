@@ -6,5 +6,5 @@ import 'package:welcome/wel.dart';
 
 
 void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Login()));
+  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Welcome()));
 }

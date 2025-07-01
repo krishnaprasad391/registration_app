@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:welcome/login.dart';
 
 class Sign extends StatelessWidget {
   const Sign({super.key});
@@ -73,7 +74,9 @@ class Sign extends StatelessWidget {
             SizedBox(height: 30,),
             Row(mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("already have an account?"),TextButton(onPressed: ()  {}, child: Text("sign up"))
+                Text("already have an account?"),TextButton(onPressed: ()  {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
+                }, child: Text("login"))
               ],
             ),
           ],

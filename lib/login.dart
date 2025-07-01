@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:welcome/signup.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -57,7 +58,9 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?"),
-                  TextButton(onPressed: () {}, child: Text("Sign up")),
+                  TextButton(onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Sign(),));
+                  }, child: Text("Sign up")),
                 ],
               ),
               Image(
