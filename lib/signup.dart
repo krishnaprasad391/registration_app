@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:welcome/login.dart';
+import 'package:welcome/services.dart';
 
-class Sign extends StatelessWidget {
+class Sign extends StatefulWidget {
   const Sign({super.key});
+
+  @override
+  State<Sign> createState() => _SignState();
+}
+
+class _SignState extends State<Sign> {
+  bool visible = false;
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController confirmcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +28,8 @@ class Sign extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               width: 300,
-              child: TextField(
+              child: TextFormField(
+                controller: namecontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -28,7 +41,8 @@ class Sign extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               width: 300,
-              child: TextField(
+              child: TextFormField(
+                controller: emailcontroller,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -40,8 +54,20 @@ class Sign extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               width: 300,
-              child: TextField(
+              child: TextFormField(
+                obscureText: !visible,
+                controller: passwordcontroller,
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        visible = !visible;
+                      });
+                    },
+                    icon: visible
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -52,8 +78,17 @@ class Sign extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               width: 300,
-              child: TextField(
+              child: TextFormField(obscureText: !visible,
+                controller: confirmcontroller,
                 decoration: InputDecoration(
+
+    suffixIcon: IconButton(
+    onPressed: () {
+    setState(() {
+    visible = !visible;
+    });
+    },
+    icon: visible?Icon(Icons.visibility):Icon(Icons.visibility_off),),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                   ),
@@ -65,18 +100,37 @@ class Sign extends StatelessWidget {
             Container(
               height: 50,
               width: 300,
-              child: TextButton(onPressed: () {}, child: Text("sign up")),
+              child: TextButton(
+                onPressed: () {
+                  register(
+                    name: namecontroller.text,
+                    email: emailcontroller.text,
+                    password: passwordcontroller.text,
+                    confirm: confirmcontroller.text,
+                    context: context,
+                  );
+                },
+                child: Text("sign up"),
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 30,),
-            Row(mainAxisAlignment: MainAxisAlignment.center,
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("already have an account?"),TextButton(onPressed: ()  {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
-                }, child: Text("login"))
+                Text("already have an account?"),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  },
+                  child: Text("login"),
+                ),
               ],
             ),
           ],

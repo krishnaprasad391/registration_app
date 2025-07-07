@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:welcome/forgot.dart';
+import 'package:welcome/services.dart';
 import 'package:welcome/signup.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  bool visible = false;
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.grey,
+    return Scaffold(
+      backgroundColor: Colors.grey,
       body: Center(
-        child: Container(width: 400,height: 800,decoration: BoxDecoration(borderRadius: BorderRadiusGeometry.circular(12),color: Colors.white),
+        child: Container(
+          width: 400,
+          height: 800,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusGeometry.circular(12),
+            color: Colors.white,
+          ),
           child: Column(
             children: [
-              SizedBox(height: 30,),
+              SizedBox(height: 30),
               Text("Login", style: TextStyle(fontSize: 40)),
               SizedBox(height: 20),
               Text("Login to your account", style: TextStyle(fontSize: 10)),
               SizedBox(height: 30),
               Container(
                 width: 300,
-                child: TextField(
+                child: TextFormField(
+                  controller: emailcontroller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -31,8 +50,18 @@ class Login extends StatelessWidget {
               SizedBox(height: 30),
               Container(
                 width: 300,
-                child: TextField(
+                child: TextFormField(
+                  obscureText: !visible,
+                  controller: passwordcontroller,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          visible = !visible;
+                        });
+                      },
+                      icon: visible?Icon(Icons.visibility):Icon(Icons.visibility_off),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: BorderSide(color: Colors.grey),
@@ -41,26 +70,49 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
+
               SizedBox(height: 35),
               SizedBox(
                 height: 50,
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    lin(
+                      email: emailcontroller.text,
+                      password: passwordcontroller.text,
+                      context: context,
+                    );
+                  },
                   child: Text("Login", style: TextStyle(fontSize: 20)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue,
                   ),
                 ),
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Forgot()),
+                  );
+                },
+                child: Text("forgot password"),
+              ),
               SizedBox(height: 40),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?"),
-                  TextButton(onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Sign(),));
-                  }, child: Text("Sign up")),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Sign()),
+                      );
+                    },
+                    child: Text("Sign up"),
+                  ),
                 ],
               ),
               Image(
